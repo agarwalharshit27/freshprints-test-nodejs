@@ -35,3 +35,9 @@ export interface IContactNumber {
   countryCode: string;
   phoneNumber: string;
 }
+
+export interface IOrderItemFulfilment {
+  code: string; // code of apparel
+  size: string;
+  quantity: number;
+}

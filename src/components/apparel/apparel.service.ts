@@ -1,12 +1,7 @@
 import { config } from "../../config";
+import { getData } from "../../util";
 import { IApparel, IInventoryUpdateArgs } from "./apparel.interface";
 import fs from "fs";
-
-async function getData() {
-  const data = fs.readFileSync(config.dataFile, {encoding: "utf8", flag: "r"});
-  return JSON.parse(data)
-}
-
 
 export const updateApparelInventory = async (args: IInventoryUpdateArgs[]) => {
   try {
