@@ -1,5 +1,5 @@
 import { getData } from "../../util";
-import { IApparel } from "../apparel/apparel.interface";
+import { IApparel, IApparelInventory } from "../apparel/apparel.interface";
 import { IOrderItemFulfilment } from "./order.interface";
 
 export const checkOrderFulfilment = async (orderItems: IOrderItemFulfilment[]) => {
@@ -49,32 +49,46 @@ export const checkMinPriceForOrderFulfilment = async (orderItems: IOrderItemFulf
     const data = await getData();
     const apparels: IApparel[] = data.apparels;
     let orderPrice = 0;
-    let fulfilment = true;
+    const apparelInventory: any = {}
     for (let i=0; i<orderItems.length; i++) {
       const orderItem = orderItems[i];
+      let availableInventory: IApparelInventory[] = [];
       const filteredApparels = apparels.filter((element) => element.code === orderItem.code);
       if (filteredApparels.length) {
-        let quantityToBeFulfilled = orderItem.quantity;
         filteredApparels.forEach(apparel => {
           const inventoryItemIdx = apparel.inventory.findIndex((ele) => ele.size === orderItem.size)
           if (inventoryItemIdx > -1) {
-            const inventoryItem = apparel.inventory[inventoryItemIdx]
-            if (inventoryItem.quantity >= quantityToBeFulfilled) {
-              quantityToBeFulfilled = 0
-            } else {
-              quantityToBeFulfilled -= inventoryItem.quantity
-            }
-          } else {
-            fulfilment = false;
-          }
+            availableInventory.push(apparel.inventory[inventoryItemIdx])
+          } 
         })
-        if (quantityToBeFulfilled) {
-          fulfilment = false
-        }
+       
+      }
+      if (apparelInventory[`${orderItem.code}-${orderItem.size}`]) {
+        apparelInventory[`${orderItem.code}-${orderItem.size}`].inventory = [...apparelInventory[`${orderItem.code}-${orderItem.size}`], ...availableInventory]
       } else {
-        fulfilment = false;
+        apparelInventory[`${orderItem.code}-${orderItem.size}`] = {
+          quantityRequired: orderItem.quantity,
+          inventory: availableInventory
+        }
       }
     }
+    Object.keys(apparelInventory).forEach((key) => {
+      const item = apparelInventory[key]
+      let quantityToBeFulfilled = item.quantityRequired;
+      item.inventory = item.inventory.sort((a: any, b: any) => a.price - b.price)
+      item.inventory.forEach((element: IApparelInventory) => {
+        if (quantityToBeFulfilled) {
+          if (element.quantity > quantityToBeFulfilled) {
+            orderPrice += quantityToBeFulfilled * element.price
+            quantityToBeFulfilled = 0;
+          } else {
+            orderPrice += element.quantity * element.price
+            quantityToBeFulfilled -= element.quantity
+          }
+        }
+      })
+    })
+    return orderPrice;
   } catch (error) {
     throw error;
   }

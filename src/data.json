@@ -1,1 +1,68 @@
-{"apparels":[{"id":"2324213","code":"Apparel1","inventory":[{"quantity":20,"size":"M","price":350},{"quantity":15,"size":"L","price":270}],"title":"Black Polo TShirt","images":[],"category":"tshirt","tags":[],"vendor":"Vendor1"},{"id":"2324214","code":"Apparel2","inventory":[{"quantity":10,"size":"M","price":250},{"quantity":15,"size":"L","price":270}],"title":"Green Polo TShirt","images":[],"category":"tshirt","tags":[],"vendor":"Vendor1"},{"id":"2324215","code":"Apparel1","inventory":[{"quantity":30,"size":"M","price":290},{"quantity":5,"size":"L","price":250}],"title":"Black Polo TShirt","images":[],"category":"tshirt","tags":[],"vendor":"Vendor2"}],"orders":[]}
+{
+  "apparels": [
+    {
+      "id": "2324213",
+      "code": "Apparel1",
+      "inventory": [
+        {
+          "quantity": 20,
+          "size": "M",
+          "price": 350
+        },
+        {
+          "quantity": 15,
+          "size": "L",
+          "price": 270
+        }
+      ],
+      "title": "Black Polo TShirt",
+      "images": [],
+      "category": "tshirt",
+      "tags": [],
+      "vendor": "Vendor1"
+    },
+    {
+      "id": "2324214",
+      "code": "Apparel2",
+      "inventory": [
+        {
+          "quantity": 10,
+          "size": "M",
+          "price": 250
+        },
+        {
+          "quantity": 15,
+          "size": "L",
+          "price": 270
+        }
+      ],
+      "title": "Green Polo TShirt",
+      "images": [],
+      "category": "tshirt",
+      "tags": [],
+      "vendor": "Vendor1"
+    },
+    {
+      "id": "2324215",
+      "code": "Apparel1",
+      "inventory": [
+        {
+          "quantity": 30,
+          "size": "M",
+          "price": 290
+        },
+        {
+          "quantity": 5,
+          "size": "L",
+          "price": 250
+        }
+      ],
+      "title": "Black Polo TShirt",
+      "images": [],
+      "category": "tshirt",
+      "tags": [],
+      "vendor": "Vendor2"
+    }
+  ],
+  "orders": []
+}
